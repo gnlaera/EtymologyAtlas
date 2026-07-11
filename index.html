@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="dark light">
   <meta name="description" content="Etymology Atlas, a provenance-first semantic-zoom explorer for historical word relationships.">
-  <title>Etymology Atlas v0.2.2</title>
+  <title>Etymology Atlas v0.3</title>
   <style>
     :root {
       --bg: #07121a;
@@ -61,7 +61,7 @@
     .brand-mark::after { inset: 13px; background: var(--accent-2); border: 0; box-shadow: 0 0 10px rgba(240,198,110,.55); }
     .brand h1 { margin: 0; font-size: 18px; letter-spacing: .02em; }
     .brand small { display: block; color: var(--muted); font-size: 11px; }
-    .search-wrap { position: relative; display: grid; grid-template-columns: minmax(180px,1fr) auto auto; gap: 8px; }
+    .search-wrap { position: relative; display: grid; grid-template-columns: minmax(180px,1fr) auto auto auto; gap: 8px; }
     #searchInput { width: 100%; height: 40px; padding: 8px 12px; }
     #suggestions { position: absolute; left: 0; right: 0; top: 44px; max-height: 320px; overflow: auto; background: #091923; border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); display: none; z-index: 12; }
     #suggestions.open { display: block; }
@@ -181,7 +181,7 @@
     .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
     .compare-card span { display: block; color: var(--muted); margin-top: 3px; }
 
-    .statusbar { display: grid; grid-template-columns: minmax(250px,1fr) auto auto auto; gap: 14px; align-items: center; padding: 4px 12px; background: #07151d; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    .statusbar { display: grid; grid-template-columns: minmax(220px,1fr) auto auto auto auto; gap: 14px; align-items: center; padding: 4px 12px; background: #07151d; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
     .statusbar span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .status-pill { padding: 2px 7px; border-radius: 999px; border: 1px solid #284653; }
     .status-pill.ok { color: var(--ok); }
@@ -269,7 +269,7 @@
     .type-note { padding: 8px 9px; border: 1px solid #3c5e6c; border-radius: 8px; background: rgba(11,32,43,.75); color: var(--muted); font-size: 11px; line-height: 1.45; }
     .type-note strong { color: var(--text); }
     .hash-value { overflow-wrap: anywhere; user-select: all; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; }
-    .statusbar { grid-template-columns: minmax(180px,1fr) auto auto auto; gap: 10px; }
+    .statusbar { grid-template-columns: minmax(170px,1fr) auto auto auto auto; gap: 10px; }
     @media (max-width: 1366px) {
       :root { --left-w: 232px; --right-w: 302px; }
       .topbar { grid-template-columns: 190px minmax(340px,1fr) auto; gap: 8px; padding-inline: 10px; }
@@ -282,6 +282,38 @@
       .landing-panel { grid-template-columns: 1fr; max-width: 720px; }
       .landing-intro { display: none; }
     }
+
+    .external-source-section { display: grid; gap: 8px; }
+    .source-mode-grid { display: grid; gap: 7px; }
+    .source-mode-grid select, .source-mode-grid button { width: 100%; }
+    .provider-cache-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .provider-cache-grid button:last-child { grid-column: 1 / -1; }
+    .source-tabs { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+    .source-tab { min-height: 30px; padding: 4px 8px; white-space: nowrap; font-size: 11px; }
+    .source-tab[aria-selected="true"] { border-color: var(--accent); color: var(--accent); background: var(--panel-2); }
+    .source-panel { display: grid; gap: 8px; padding-top: 9px; }
+    .source-panel[hidden] { display: none; }
+    .external-head, .source-record-title { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .external-head h3 { margin: 0; }
+    .external-head p { margin: 3px 0 0; }
+    .source-record-card, .reconciliation-card, .evidence-extract { border: 1px solid var(--line); border-radius: 8px; padding: 9px; background: rgba(7,18,26,.55); }
+    .source-record-card p, .reconciliation-card p, .evidence-extract p { margin: 6px 0; line-height: 1.45; }
+    .source-actions { display: grid; grid-template-columns: 1fr; gap: 6px; margin-top: 8px; }
+    .source-attribution { color: var(--muted); font-size: 10px; overflow-wrap: anywhere; }
+    .structured-list { max-height: 260px; overflow: auto; padding-right: 4px; }
+    .structured-list p { font-size: 11px; border-bottom: 1px solid rgba(41,70,83,.45); padding-bottom: 5px; }
+    .warning-callout { border-left: 3px solid var(--warning); padding: 7px 8px; background: rgba(255,210,116,.07); color: var(--muted); }
+    .reconcile-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .reconcile-columns > div { min-width: 0; }
+    .reconcile-columns p { font-size: 11px; }
+    .kv { display: grid; grid-template-columns: minmax(100px,.8fr) minmax(0,1.2fr); gap: 5px 10px; margin: 0; }
+    .kv dt { color: var(--muted); }
+    .kv dd { margin: 0; overflow-wrap: anywhere; }
+    .live-source-pill { max-width: 260px; }
+    @media (max-width: 1366px) {
+      .search-wrap { grid-template-columns: minmax(160px,1fr) auto auto; }
+      #searchLiveButton { grid-column: 2 / 4; }
+    }
   </style>
 </head>
 <body>
@@ -289,13 +321,14 @@
     <header class="topbar" aria-label="Application toolbar">
       <div class="brand">
         <div class="brand-mark" aria-hidden="true"></div>
-        <div><h1>Etymology Atlas</h1><small>Provenance-first semantic zoom explorer · v0.2.2 · verified complete IE-CoR v1.2 offline</small></div>
+        <div><h1>Etymology Atlas</h1><small>Provenance-first semantic zoom explorer · v0.3 · verified IE-CoR v1.2 plus optional source-separated enrichment</small></div>
       </div>
       <div class="search-wrap">
         <label class="sr-only" for="searchInput">Search lemma</label>
         <input id="searchInput" type="search" autocomplete="off" spellcheck="false" placeholder="Search words, meanings or languages…" aria-expanded="false" aria-controls="suggestions">
         <label class="sr-only" for="searchScope">Search scope</label><select id="searchScope" aria-label="Search scope"><option value="all">All</option><option value="words">Words</option><option value="meanings">Meanings</option><option value="languages">Languages</option></select>
-        <button id="searchButton" type="button">Explore</button>
+        <button id="searchButton" type="button">Explore local</button>
+        <button id="searchLiveButton" type="button" disabled title="Select a local lexeme and enable live enrichment first">Search live sources</button>
         <div id="suggestions" role="listbox" aria-label="Search suggestions"></div>
       </div>
       <nav class="top-actions" aria-label="History and view controls">
@@ -387,6 +420,30 @@
             <label class="check-row"><input id="autoExpandToggle" type="checkbox">Debounced close-zoom expansion</label>
           </section>
 
+
+          <section class="section external-source-section">
+            <h3>External sources</h3>
+            <div class="source-mode-grid">
+              <label for="sourceModeSelect" class="muted">Source policy</label>
+              <select id="sourceModeSelect" aria-label="External source policy">
+                <option value="local-only" selected>Local only</option>
+                <option value="local-cached">Local + cached evidence</option>
+                <option value="live-enabled">Live enrichment enabled</option>
+              </select>
+              <label for="wiktionaryEditionSelect" class="muted">Wiktionary edition</label>
+              <select id="wiktionaryEditionSelect" aria-label="Wiktionary evidence edition">
+                <option value="en" selected>English</option><option value="de">German</option><option value="fr">French</option><option value="es">Spanish</option><option value="pt">Portuguese</option>
+              </select>
+              <button id="fetchExternalButton" type="button" disabled>Fetch external evidence</button>
+            </div>
+            <div class="provider-cache-grid">
+              <button id="clearWikidataCacheButton" type="button">Clear Wikidata cache</button>
+              <button id="clearWiktionaryCacheButton" type="button">Clear Wiktionary cache</button>
+              <button id="clearExternalCacheButton" type="button">Clear all external caches</button>
+            </div>
+            <p class="help-callout">Live sources are supplementary, explicit, bounded, and source-separated. Selecting a node never triggers a network request.</p>
+          </section>
+
           <section class="section">
             <h3>Data</h3>
             <div class="control-grid"><button id="clearCacheButton" type="button">Clear cache</button><button id="corpusStatusButton" type="button">Corpus status</button><button id="runTestsButton" type="button">Run tests</button></div>
@@ -432,6 +489,7 @@
         <div id="graphSummary" class="graph-summary" aria-live="polite">Loading embedded corpus…</div>
         <div id="zoomAnnouncer" class="zoom-announcer" aria-live="polite"></div>
         <div id="accessibleGraphSummary" class="sr-only" aria-live="polite">Loading embedded corpus with dual-script accessibility labels.</div>
+        <div id="externalLiveRegion" class="sr-only" aria-live="polite">External sources are in local-only mode.</div>
       </section>
 
       <aside id="rightPanel" class="side-panel right-panel" aria-label="Node and relationship inspector">
@@ -448,6 +506,7 @@
 
     <footer class="statusbar" aria-label="Application status">
       <span id="sourceStatus">Curated seed and IE-CoR v1.2 ready</span>
+      <span id="liveSourceStatus" class="status-pill live-source-pill">Local corpus</span>
       <span id="cacheStatus" class="status-pill">Cache: checking</span>
       <span id="countStatus" class="status-pill">0 nodes · 0 edges</span>
       <span id="warningStatus" class="status-pill ok">Offline IE-CoR corpus available</span>
@@ -468,7 +527,7 @@
       <p>The embedded IE-CoR v1.2 corpus was rebuilt from the complete verified official Zenodo archive and supports offline search, progressive loans and uncertainty, explorable language and meaning summaries, and reclaiming collapse. Cognate-set membership is not a direct word-to-word ancestry claim. Loan relations are shown only at the resolution supplied by the dataset. Branch summaries are application-generated view constructs, not historical entities.</p>
       <p>IE-CoR v1.2 is licensed under Creative Commons Attribution 4.0 International. Citation: Heggarty, Paul, Cormac Anderson and Matthew Scarborough. 2024. IE-CoR v1.2. Zenodo. DOI 10.5281/zenodo.13304537.</p>
       <h3>Live sources</h3>
-      <p>Wikidata Lexeme search is optional and may fail because of connectivity, rate limits, or incomplete coverage. Live records are treated as untrusted text, validated, bounded, normalised, and never inserted as HTML. Local seed and IE-CoR search remain available offline.</p>
+      <p>External sources default to Local only. Live retrieval requires an explicit action after selecting a local lexeme. Wikidata lemmata, forms, senses, statements, qualifiers and references remain distinct. Wiktionary is displayed only as bounded attributed evidence and is never converted automatically into graph relationships.</p>
     </div>
   </dialog>
 
